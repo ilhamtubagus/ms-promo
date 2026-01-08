@@ -12,14 +12,37 @@ const swaggerSpec = {
   paths: {
     '/promos': {
       get: {
-        summary: 'Get all active promos',
+        summary: 'Get all active promos with pagination',
         tags: ['Promos'],
+        parameters: [
+          {
+            name: 'page',
+            in: 'query',
+            schema: { type: 'integer', default: 1 },
+            description: 'Page number',
+          },
+          {
+            name: 'limit',
+            in: 'query',
+            schema: { type: 'integer', default: 10 },
+            description: 'Number of items per page',
+          },
+        ],
         responses: {
           200: {
-            description: 'List of promos',
+            description: 'Paginated list of promos',
             content: {
               'application/json': {
-                schema: { type: 'array', items: promoSwagger },
+                schema: {
+                  type: 'object',
+                  properties: {
+                    data: { type: 'array', items: promoSwagger },
+                    total: { type: 'integer' },
+                    page: { type: 'integer' },
+                    limit: { type: 'integer' },
+                    totalPages: { type: 'integer' },
+                  },
+                },
               },
             },
           },

@@ -4,8 +4,8 @@ class PromoService {
     this.logger = logger;
   }
 
-  async getPromos(){
-    return this.promoRepository.findPromos();
+  async getPromos(page, limit) {
+    return this.promoRepository.findPromos(page, limit);
   }
 
   async createPromo(data) {

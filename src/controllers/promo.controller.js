@@ -11,8 +11,11 @@ class PromoController {
     this.logger.info({ requestId: req.id }, 'GET /promos');
 
     try {
-      const promos = await this.promoService.getPromos();
-      res.json(promos);
+      const page = parseInt(req.query.page, 10) || 1;
+      const limit = parseInt(req.query.limit, 10) || 10;
+
+      const result = await this.promoService.getPromos(page, limit);
+      res.json(result);
     } catch (err) {
       this.logger.error(err, 'Failed to fetch promos');
 
