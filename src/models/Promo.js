@@ -63,6 +63,11 @@ const promoSchema = new mongoose.Schema(
                   return this.type === PROMO_TYPE.FREE_SHIPPING;
               },
           },
+          minimumAmount: {
+            type: Number,
+            min: 1,
+            required: false,
+          },
       },
   },
   {

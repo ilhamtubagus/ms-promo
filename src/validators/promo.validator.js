@@ -13,10 +13,23 @@ export const promoSchema = Joi.object({
   quota: Joi.number().integer().min(0).required().example(100),
   tnc: Joi.string().required().example('Max discount applies'),
   benefit: Joi.object({
-    discountPercentage: Joi.number().min(1).max(100),
-    maxAmount: Joi.number().min(1),
-    reductionAmount: Joi.number().min(1),
-    freeShipping: Joi.boolean(),
+    discountPercentage: Joi.when('type', {
+      is: Joi.valid(PROMO_TYPE.DISCOUNT, PROMO_TYPE.FIRST_USER),
+      then: Joi.number().min(1).max(100).required(),
+    }),
+    maxAmount: Joi.when('type', {
+      is: Joi.valid(PROMO_TYPE.DISCOUNT, PROMO_TYPE.FIRST_USER),
+      then: Joi.number().min(1).required(),
+    }),
+    reductionAmount: Joi.when('type', {
+      is: PROMO_TYPE.AMOUNT_REDUCTION,
+      then: Joi.number().min(1).required(),
+    }),
+    freeShipping: Joi.when('type', {
+      is: PROMO_TYPE.FREE_SHIPPING,
+      then: Joi.boolean().required(),
+    }),
+    minimumAmount: Joi.number().min(1).optional(),
   }).required(),
 });
 
