@@ -4,13 +4,6 @@ import mongoose from 'mongoose';
 
 const promoSchema = new mongoose.Schema(
   {
-      promoId: {
-        type: String,
-        required: true,
-        uppercase: true,
-        index: true,
-        unique: true,
-      },
       promoCode: {
           type: String,
           required: true,
